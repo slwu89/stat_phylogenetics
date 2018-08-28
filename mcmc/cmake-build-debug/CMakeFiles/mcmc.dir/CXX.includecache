@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/slwu89/Desktop/git/stat_phylogenetics/mcmc/RandomVariable.cpp
+ctime
+-
+cmath
+-
+iostream
+-
+RandomVariable.h
+/Users/slwu89/Desktop/git/stat_phylogenetics/mcmc/RandomVariable.h
+
+/Users/slwu89/Desktop/git/stat_phylogenetics/mcmc/RandomVariable.h
+
+/Users/slwu89/Desktop/git/stat_phylogenetics/mcmc/main.cpp
+iostream
+-
+iomanip
+-
+cmath
+-
+RandomVariable.h
+/Users/slwu89/Desktop/git/stat_phylogenetics/mcmc/RandomVariable.h
+
