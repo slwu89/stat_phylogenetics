@@ -89,13 +89,13 @@ int main() {
         }
     }
 
+    std::cout << "MCMC run complete!" << std::endl;
     std::cout << std::endl;
 
     /* print table */
     // summarize the results
     double cumulativeProbability = 0.0;
-    for (int i=0; i<100; i++)
-    {
+    for (int i=0; i<100; i++){
         double intervalProbability = (double)bins[i] / numSamples;
         cumulativeProbability += intervalProbability;
         std::cout << std::fixed << std::setprecision(2) << i * 0.01 << " - ";
