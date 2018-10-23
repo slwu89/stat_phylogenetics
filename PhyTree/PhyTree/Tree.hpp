@@ -24,9 +24,15 @@ public:
     ~tree();
     void print();
     
+    std::vector<node*>& getTraversalOrder(){ return postOrderSequence; }
+    
 private:
     node*               root;
     std::vector<node*>  nodes;
+    
+    void                initializeTraversalOrder();
+    void                passDown(node* p);
+    std::vector<node*>  postOrderSequence;
     
 };
 
