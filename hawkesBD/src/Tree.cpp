@@ -10,12 +10,13 @@
 #include "PRNG.hpp"
 
 /* constructor & destructor */
-Tree::Tree(double lambda_, double mu_, double duration_, std::unique_ptr<prng> prng_) : 
+Tree::Tree(double lambda_, double mu_, double duration_, unsigned int seed_) : 
   root(nullptr),
+  numExtant(0),
   lambda(lambda_),
   mu(mu_),
   duration(duration_),
-  prngPtr(std::move(prng_))
+  prngPtr(std::make_unique<prng>(seed_))
 {
   std::cout << "tree born at " << this << std::endl;
 }
@@ -50,7 +51,7 @@ void Tree::passDown(Node* p){
 }
 
 /* birth-death process simulation */
-void Tree::simulate(){
+void Tree::simulate(const unsigned int maxN){
   
   /* generate a birth-death process with parameter lambda, mu, and duration */
   
@@ -68,13 +69,15 @@ void Tree::simulate(){
   while(t < duration){
     
     /* increment t using exponential distribution */
-    double rate = activeNodes.size() * (lambda + mu);
+    unsigned int nnodes = activeNodes.size();
+    double rate =  nnodes * (lambda + mu);
     t += prngPtr->get_rexp(rate);
     
     if(t < duration){
       
       /* choose a node */
       Node* p = chooseNodeFromSet();
+      p->setTime(t);
       
       /* choose type of event */
       double u = prngPtr->get_runif();
@@ -99,7 +102,40 @@ void Tree::simulate(){
       
     }
     
+    /* if we get an absurd number of nodes, break out of loop */
+    if(nnodes >= maxN){
+      break;
+    }
+    
   }
+  
+  /* clean up */
+  numExtant = activeNodes.size();
+  for(Node* node : activeNodes){
+    node->setTime(duration);
+  }
+  initializeTraversalOrder();
+  
+  /* set the index variable and assign branch lengths from the node times */
+  unsigned int nodeIdx = 0;
+  for(size_t i=0; i<postOrderSequence.size(); i++){
+    Node* p = postOrderSequence[i];
+    if(p->getLft() == nullptr && p->getRht() == nullptr){
+      p->setIndex(nodeIdx++);
+      p->setName(std::to_string(nodeIdx));
+    }
+    if(p->getAnc() != nullptr){
+      p->setBranchLength(p->getTime() - p->getAnc()->getTime());
+    }
+  }
+  
+  for(size_t i=0; i<postOrderSequence.size(); i++){
+    Node* p = postOrderSequence[i];
+    if(!( p->getLft() == nullptr && p->getRht() == nullptr )){
+      p->setIndex(nodeIdx);
+    }
+  }
+  
 }
 
 Node* Tree::chooseNodeFromSet(){

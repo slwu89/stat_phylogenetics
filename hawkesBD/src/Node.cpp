@@ -27,4 +27,5 @@ void Node::print(){
   std::cout << "  Anc:    " << ancestor << std::endl;
   std::cout << "  Name:    \"" << name << "\"" << std::endl;
   std::cout << "  Brlen:    " << branchLength << std::endl;
+  std::cout << "  Time:    " << time << std::endl;
 }

@@ -5,19 +5,23 @@
 
 using namespace Rcpp;
 
-// rcpp_hello_world
-List rcpp_hello_world();
-RcppExport SEXP _hawkesBD_rcpp_hello_world() {
+// simulate_bd_poisson
+void simulate_bd_poisson(const unsigned int seed, const double lambda, const double mu, const double duration, const unsigned int maxN);
+RcppExport SEXP _hawkesBD_simulate_bd_poisson(SEXP seedSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP durationSEXP, SEXP maxNSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpp_hello_world());
-    return rcpp_result_gen;
+    Rcpp::traits::input_parameter< const unsigned int >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< const double >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const double >::type duration(durationSEXP);
+    Rcpp::traits::input_parameter< const unsigned int >::type maxN(maxNSEXP);
+    simulate_bd_poisson(seed, lambda, mu, duration, maxN);
+    return R_NilValue;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_hawkesBD_rcpp_hello_world", (DL_FUNC) &_hawkesBD_rcpp_hello_world, 0},
+    {"_hawkesBD_simulate_bd_poisson", (DL_FUNC) &_hawkesBD_simulate_bd_poisson, 5},
     {NULL, NULL, 0}
 };
 

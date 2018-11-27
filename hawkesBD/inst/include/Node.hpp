@@ -27,12 +27,14 @@ public:
   unsigned int    getIndex(){ return index; }
   std::string     getName(){ return name; };
   double          getBranchLength(){ return branchLength; };
+  double          getTime(){ return time; };
   void            setLft(Node* p){ left = p; };
   void            setRht(Node* p){ right = p; };
   void            setAnc(Node* p){ ancestor = p; };
   void            setIndex(unsigned int x){ index = x; };
   void            setName(const std::string& s){ name = s; };
   void            setBranchLength(double x){ branchLength = x; };
+  void            setTime(double t){ time = t; };
   void            print();
   
   
@@ -44,6 +46,7 @@ private:
   unsigned int    index;
   std::string     name;
   double          branchLength;
+  double          time;
   
 };
 

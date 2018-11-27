@@ -22,14 +22,14 @@ class prng;
 class Tree {
 public:
   
-              Tree(double lambda_, double mu_, double duration_, std::unique_ptr<prng> prng_);
+              Tree(double lambda_, double mu_, double duration_, unsigned int seed_);
               ~Tree();
   void        listNodes();
   
   std::vector<Node*>& getTraversalOrder(){ return postOrderSequence; }
   
   /* bd process */
-  void                simulate();
+  void                simulate(const unsigned int maxN);
   Node*               chooseNodeFromSet();
   
 protected:
@@ -39,6 +39,7 @@ protected:
   std::vector<Node*>  nodes;
   std::vector<Node*>  postOrderSequence;
   std::set<Node*>     activeNodes;
+  size_t              numExtant;
   
   /* parameters */
   double              lambda;
