@@ -18,36 +18,32 @@
 /* Node class */
 class Node {
 public:
+  Node();
+  Node*               getLft(){return left;};
+  Node*               getRht(){return right;};
+  Node*               getAnc(){return ancestor;};
+  int                 getIndex(){return index;};
+  std::string         getName() { return name; }
+  double              getBranchLength() { return branchLength;};
+  double              getTime(){ return time; }
+  void                setLft(Node* p) { left = p; }
+  void                setRht(Node* p) { right = p; }
+  void                setAnc(Node* p) { ancestor = p; }
+  void                setIndex(int x) { index = x; }
+  void                setName(std::string s) { name = s; }
+  void                setBranchLength(double x) { branchLength = x; }
+  void                setTime(double x) { time = x; }
+  void                print();
   
-                  Node();
-                  ~Node();
-  Node*           getLft(){ return left; };
-  Node*           getRht(){ return right; };
-  Node*           getAnc(){ return ancestor; }
-  unsigned int    getIndex(){ return index; }
-  std::string     getName(){ return name; };
-  double          getBranchLength(){ return branchLength; };
-  double          getTime(){ return time; };
-  void            setLft(Node* p){ left = p; };
-  void            setRht(Node* p){ right = p; };
-  void            setAnc(Node* p){ ancestor = p; };
-  void            setIndex(unsigned int x){ index = x; };
-  void            setName(const std::string& s){ name = s; };
-  void            setBranchLength(double x){ branchLength = x; };
-  void            setTime(double t){ time = t; };
-  void            print();
-  
-  
-private:
-  
-  Node*           left;
-  Node*           right;
-  Node*           ancestor;
-  unsigned int    index;
-  std::string     name;
-  double          branchLength;
-  double          time;
-  
+protected:
+  Node*               left;
+  Node*               right;
+  Node*               ancestor;
+  int                 index;
+  std::string         name;
+  double              branchLength;
+  double              time;
 };
+
 
 #endif

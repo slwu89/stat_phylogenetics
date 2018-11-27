@@ -9,9 +9,13 @@
 #include "Node.hpp"
 #include "PRNG.hpp"
 
-/* constructor & destructor */
+
+/* ################################################################################
+ * constructor & destructor
+################################################################################ */
+ 
 Tree::Tree(double lambda_, double mu_, double duration_, unsigned int seed_) : 
-  root(nullptr),
+  root(NULL),
   numExtant(0),
   lambda(lambda_),
   mu(mu_),
@@ -20,6 +24,7 @@ Tree::Tree(double lambda_, double mu_, double duration_, unsigned int seed_) :
 {
   std::cout << "tree born at " << this << std::endl;
   activeNodes.clear();
+  nodes.clear();
 }
 
 Tree::~Tree(){
@@ -30,28 +35,41 @@ Tree::~Tree(){
   activeNodes.clear();
 }
 
-/* print all nodes */
+
+/* ################################################################################
+ * print all nodes
+################################################################################ */
+ 
 void Tree::listNodes(){
   for(auto it = nodes.begin(); it != nodes.end(); it++){
     (*it)->print();
   }
 }
 
-/* traversal */
+
+/* ################################################################################
+ * traversal
+################################################################################ */
+ 
 void Tree::initializeTraversalOrder(){
   postOrderSequence.clear();
   passDown(root);
 };
 
 void Tree::passDown(Node* p){
-  if(p != nullptr){
-    passDown(p->getLft());
-    passDown(p->getRht());
-    postOrderSequence.push_back(p);
+  if(p != NULL){
+    passDown(p->getLft()); 
+    passDown(p->getRht()); 
+    postOrderSequence.push_back(p); 
   }
 }
 
-/* birth-death process simulation */
+
+/* ################################################################################
+ * birth-death process simulation
+################################################################################ */
+ 
+/* run a simulation */
 void Tree::simulate(const unsigned int maxN){
   
   /* generate a birth-death process with parameter lambda, mu, and duration */
@@ -70,143 +88,126 @@ void Tree::simulate(const unsigned int maxN){
   while(t < duration){
     
     /* increment t using exponential distribution */
-    unsigned int nnodes = activeNodes.size();
-    double rate =  nnodes * (lambda + mu);
+    double rate = activeNodes.size() * (lambda + mu);
     t += prngPtr->get_rexp(rate);
     
+    /* if t is still less than duration, go ahead do the speciation or extinction thing
+     * on a randomly selected active lineage
+     */
     if(t < duration){
-      
-      /* choose a node */
+      /* choose a ndoe */
       Node* p = chooseNodeFromSet();
       p->setTime(t);
       
-      /* choose type of event */
+      /* choose a type of event */
       double u = prngPtr->get_runif();
-      
       if(u < lambda / (lambda + mu)){
-        // /* speciation */
-        // Node* newLft = new Node; /* 1. allocate new left and right nodes */
-        // Node* newRht = new Node;
-        // nodes.emplace_back(newLft); /* 2. add the new nodes to the tree */
-        // nodes.emplace_back(newRht);
-        // newLft->setAnc(p); /* 3. set the ancestor of both new nodes to be p */
-        // newRht->setAnc(p);
-        // p->setLft(newLft); /* 4. set the left and right values of p to be the new nodes */
-        // p->setRht(newRht);
-        // activeNodes.erase(p); /* 5. modify the list of active nodes */
-        // activeNodes.insert(newLft);
-        // activeNodes.insert(newRht);
         
-        
-        // speciation event
-        Node* newLft = new Node;  /* 1. allocate new left and right nodes */
-        Node* newRht = new Node; 
-        nodes.push_back(newLft); /* 2. add the new nodes to the tree */
-        nodes.push_back(newRht); 
-        newLft->setAnc(p); /* 3. set the ancestor of both new nodes to be p */
-        newRht->setAnc(p); 
-        p->setLft(newLft); /* 4. set the left and right values of p to be the new nodes */
-        p->setRht(newRht); 
-        activeNodes.erase(p);  /* 5. modify the list of active nodes */
-        activeNodes.insert(newLft); 
+        /* speciation */
+        Node* newLft = new Node; /* allocate new left and right nodes */
+        Node* newRht = new Node;
+        nodes.push_back(newLft); /* add the new nodes to them tree */
+        nodes.push_back(newRht);
+        newLft->setAnc(p); /* set the ancestor of both new nodes to be p */
+        newRht->setAnc(p);
+        p->setLft(newLft); /* set the left and right values of p to be the new nodes */
+        p->setRht(newRht);
+        activeNodes.erase(p); /* modify the list of active nodes */
+        activeNodes.insert(newLft);
         activeNodes.insert(newRht);
         
       } else {
+        
         /* extinction */
         activeNodes.erase(p); /* poor p ... he's dead */
+        
       }
       
     }
     
-    /* if we get an absurd number of nodes, break out of loop */
-    if(nnodes >= maxN){
+    
+    /* killswitch for memory */
+    if(nodes.size() > maxN){
+      Rcpp::Rcout << "warning: exceeded 'maxN' number of nodes; do not trust output" << std::endl;
       break;
     }
     
   } /* end sim */
   
   /* clean up */
+  
+  
+  /* any nodes that are still alive have their time set to current time */
   numExtant = activeNodes.size();
-  for(Node* node : activeNodes){
-    node->setTime(duration);
+  for(Node* nde : activeNodes){
+    nde->setTime(duration);
   }
+  
   initializeTraversalOrder();
   
   /* set the index variable and assign branch lengths from the node times */
-  // unsigned int nodeIdx = 0;
-  // for(size_t i=0; i<postOrderSequence.size(); i++){
-  //   Node* p = postOrderSequence[i];
-  //   if(p->getLft() == nullptr && p->getRht() == nullptr){
-  //     p->setIndex(nodeIdx++);
-  //     p->setName(std::to_string(nodeIdx));
-  //   }
-  //   if(p->getAnc() != nullptr){
-  //     p->setBranchLength(p->getTime() - p->getAnc()->getTime());
-  //   }
-  // }
-  // 
-  // for(size_t i=0; i<postOrderSequence.size(); i++){
-  //   Node* p = postOrderSequence[i];
-  //   if(!( p->getLft() == nullptr && p->getRht() == nullptr )){
-  //     p->setIndex(nodeIdx);
-  //   }
-  // }
-  
-  // set the index variable and assign branch lengths from the node times
   int nodeIdx = 0;
-  for (int i=0; i<postOrderSequence.size(); i++)
-  {
+  for(int i=0; i<postOrderSequence.size(); i++){
     Node* p = postOrderSequence[i];
-    if (p->getLft() == NULL && p->getRht() == NULL)
-    {
+    if(p->getLft() == NULL && p->getRht() == NULL){
       p->setIndex(nodeIdx++);
-      p->setName( std::to_string(nodeIdx) ); }
-    if (p->getAnc() != NULL)
+      p->setName( std::to_string(nodeIdx) ); 
+    }
+    if(p->getAnc() != NULL){
       p->setBranchLength( p->getTime() - p->getAnc()->getTime() );
+    }
   }
-  for (int i=0; i<postOrderSequence.size(); i++)
-  {
+  for(int i=0; i<postOrderSequence.size(); i++){
     Node* p = postOrderSequence[i];
-    if ( !(p->getLft() == NULL && p->getRht() == NULL) )
-      p->setIndex(nodeIdx++); }
-  
+    if( !(p->getLft() == NULL && p->getRht() == NULL) ){
+      p->setIndex(nodeIdx++); 
+    }
+  }
+
 }
 
+/* choose a node from set of active nodes */
 Node* Tree::chooseNodeFromSet(){
-  unsigned int whichNode = (int)(activeNodes.size() * prngPtr->get_runif());
-  unsigned int i = 0;
-  for(Node* node : activeNodes){
+  int whichNode = (int)(activeNodes.size() * prngPtr->get_runif()); 
+  int i = 0;
+  for(Node* nde : activeNodes){
     if(whichNode == i){
-      return node;
+      return nde;
     }
     i++;
   }
-  return nullptr;
+  return NULL;
 };
 
-/* Newick format */
+
+/* ################################################################################
+ * write tree in Newick format
+################################################################################ */
+
+/* return tree in newick format as a string */
 std::string Tree::getNewick(){
   std::stringstream ss;
-  if(root->getLft() != nullptr && root->getRht() != nullptr){
+  if(root->getLft() != NULL && root->getRht() != NULL){
     writeTree(root, ss);
   } else {
-    writeTree(root->getLft(), ss); 
+    writeTree(root->getLft(), ss);
   }
-  std::string newick = ss.str(); 
+  std::string newick = ss.str();
   return newick;
 };
 
+/* write the tree recursively */
 void Tree::writeTree(Node* p, std::stringstream& ss){
   
-  if(p != nullptr){
-    if(p->getLft() == nullptr){
+  if(p != NULL){
+    if(p->getLft() == NULL){
       ss << p->getName() << ":" << std::fixed << std::setprecision(5) << p->getBranchLength();
     } else {
       ss << "(";
       writeTree(p->getLft(), ss); 
       ss << ",";
       writeTree(p->getRht(), ss); 
-      if(p->getAnc() == nullptr){
+      if(p->getAnc() == NULL){
         ss << ")";
       } else {
         ss << "):" << std::fixed << std::setprecision(5) << p->getBranchLength();

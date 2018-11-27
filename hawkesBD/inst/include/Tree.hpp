@@ -10,9 +10,13 @@
 
 /* C++ includes */
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 #include <vector>
 #include <memory>
 #include <set>
+
+#include <Rcpp.h>
 
 /* forward declare node & PRNG class */
 class Node;
@@ -30,10 +34,13 @@ public:
   
   /* bd process */
   void                simulate(const unsigned int maxN);
-  Node*               chooseNodeFromSet();
   
   /* Newick format */
   std::string         getNewick();
+  
+  /* accessors */
+  size_t              getNumExtant(){ return numExtant; }
+  void                setNumExtant(size_t x){ numExtant = x; }
   
 protected:
   
@@ -55,6 +62,7 @@ protected:
   /* functions */
   void                initializeTraversalOrder();
   void                passDown(Node* p);
+  Node*               chooseNodeFromSet();
   
   /* Newick format */
   void                writeTree(Node* p, std::stringstream& ss);
