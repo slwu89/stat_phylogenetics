@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // simulate_bd_poisson
-void simulate_bd_poisson(const unsigned int seed, const double lambda, const double mu, const double duration, const unsigned int maxN);
-RcppExport SEXP _hawkesBD_simulate_bd_poisson(SEXP seedSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP durationSEXP, SEXP maxNSEXP) {
+void simulate_bd_poisson(const unsigned int seed, const double lambda, const double mu, const double duration, const unsigned int maxN, const std::string& out);
+RcppExport SEXP _hawkesBD_simulate_bd_poisson(SEXP seedSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP durationSEXP, SEXP maxNSEXP, SEXP outSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const unsigned int >::type seed(seedSEXP);
@@ -15,13 +15,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const double >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const double >::type duration(durationSEXP);
     Rcpp::traits::input_parameter< const unsigned int >::type maxN(maxNSEXP);
-    simulate_bd_poisson(seed, lambda, mu, duration, maxN);
+    Rcpp::traits::input_parameter< const std::string& >::type out(outSEXP);
+    simulate_bd_poisson(seed, lambda, mu, duration, maxN, out);
     return R_NilValue;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_hawkesBD_simulate_bd_poisson", (DL_FUNC) &_hawkesBD_simulate_bd_poisson, 5},
+    {"_hawkesBD_simulate_bd_poisson", (DL_FUNC) &_hawkesBD_simulate_bd_poisson, 6},
     {NULL, NULL, 0}
 };
 

@@ -4,7 +4,7 @@
 #' Simulate Birth-Death Cladogenesis Process on Tree
 #' 
 #' @export
-simulate_bd_poisson <- function(seed, lambda, mu, duration, maxN) {
-    invisible(.Call('_hawkesBD_simulate_bd_poisson', PACKAGE = 'hawkesBD', seed, lambda, mu, duration, maxN))
+simulate_bd_poisson <- function(seed, lambda, mu, duration, maxN, out) {
+    invisible(.Call('_hawkesBD_simulate_bd_poisson', PACKAGE = 'hawkesBD', seed, lambda, mu, duration, maxN, out))
 }
 

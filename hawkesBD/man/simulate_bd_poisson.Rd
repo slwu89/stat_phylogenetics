@@ -4,7 +4,7 @@
 \alias{simulate_bd_poisson}
 \title{Simulate Birth-Death Cladogenesis Process on Tree}
 \usage{
-simulate_bd_poisson(seed, lambda, mu, duration, maxN)
+simulate_bd_poisson(seed, lambda, mu, duration, maxN, out)
 }
 \description{
 Simulate Birth-Death Cladogenesis Process on Tree
