@@ -32,6 +32,9 @@ public:
   void                simulate(const unsigned int maxN);
   Node*               chooseNodeFromSet();
   
+  /* Newick format */
+  std::string         getNewick();
+  
 protected:
   
   /* data */
@@ -53,6 +56,8 @@ protected:
   void                initializeTraversalOrder();
   void                passDown(Node* p);
   
+  /* Newick format */
+  void                writeTree(Node* p, std::stringstream& ss);
   
 };
 

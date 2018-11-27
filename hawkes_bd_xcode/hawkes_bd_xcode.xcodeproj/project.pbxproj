@@ -3,17 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC81CBD0217FCB2A0086916F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC81CBCF217FCB2A0086916F /* main.cpp */; };
-		CC81CBD8217FCB6B0086916F /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC81CBD6217FCB6B0086916F /* Node.cpp */; };
-		CC81CBDB217FCB760086916F /* Tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC81CBD9217FCB760086916F /* Tree.cpp */; };
+		CC707CDA21ACDBFD00A94014 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC707CD921ACDBFD00A94014 /* Node.cpp */; };
+		CC707CDD21ADAE5F00A94014 /* Tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC707CDB21ADAE5F00A94014 /* Tree.cpp */; };
+		CCA85B2821ACD88100D308AE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCA85B2721ACD88100D308AE /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		CC81CBCA217FCB2A0086916F /* CopyFiles */ = {
+		CCA85B2221ACD88100D308AE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -25,16 +25,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CC81CBCC217FCB2A0086916F /* PhyTree */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PhyTree; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC81CBCF217FCB2A0086916F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		CC81CBD6217FCB6B0086916F /* Node.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
-		CC81CBD7217FCB6B0086916F /* Node.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Node.hpp; sourceTree = "<group>"; };
-		CC81CBD9217FCB760086916F /* Tree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tree.cpp; sourceTree = "<group>"; };
-		CC81CBDA217FCB760086916F /* Tree.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tree.hpp; sourceTree = "<group>"; };
+		CC707CD821ACDBF800A94014 /* Node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Node.hpp; sourceTree = "<group>"; };
+		CC707CD921ACDBFD00A94014 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
+		CC707CDB21ADAE5F00A94014 /* Tree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tree.cpp; sourceTree = "<group>"; };
+		CC707CDC21ADAE5F00A94014 /* Tree.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tree.hpp; sourceTree = "<group>"; };
+		CC707CDF21ADAE9B00A94014 /* PRNG.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PRNG.hpp; sourceTree = "<group>"; };
+		CCA85B2421ACD88100D308AE /* hawkes_bd_xcode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = hawkes_bd_xcode; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCA85B2721ACD88100D308AE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		CC81CBC9217FCB2A0086916F /* Frameworks */ = {
+		CCA85B2121ACD88100D308AE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -44,100 +45,102 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CC81CBC3217FCB2A0086916F = {
+		CCA85B1B21ACD88100D308AE = {
 			isa = PBXGroup;
 			children = (
-				CC81CBCE217FCB2A0086916F /* PhyTree */,
-				CC81CBCD217FCB2A0086916F /* Products */,
+				CCA85B2621ACD88100D308AE /* hawkes_bd_xcode */,
+				CCA85B2521ACD88100D308AE /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		CC81CBCD217FCB2A0086916F /* Products */ = {
+		CCA85B2521ACD88100D308AE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CC81CBCC217FCB2A0086916F /* PhyTree */,
+				CCA85B2421ACD88100D308AE /* hawkes_bd_xcode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CC81CBCE217FCB2A0086916F /* PhyTree */ = {
+		CCA85B2621ACD88100D308AE /* hawkes_bd_xcode */ = {
 			isa = PBXGroup;
 			children = (
-				CC81CBCF217FCB2A0086916F /* main.cpp */,
-				CC81CBD9217FCB760086916F /* Tree.cpp */,
-				CC81CBDA217FCB760086916F /* Tree.hpp */,
-				CC81CBD6217FCB6B0086916F /* Node.cpp */,
-				CC81CBD7217FCB6B0086916F /* Node.hpp */,
+				CCA85B2721ACD88100D308AE /* main.cpp */,
+				CC707CD821ACDBF800A94014 /* Node.hpp */,
+				CC707CD921ACDBFD00A94014 /* Node.cpp */,
+				CC707CDB21ADAE5F00A94014 /* Tree.cpp */,
+				CC707CDC21ADAE5F00A94014 /* Tree.hpp */,
+				CC707CDF21ADAE9B00A94014 /* PRNG.hpp */,
 			);
-			path = PhyTree;
+			path = hawkes_bd_xcode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CC81CBCB217FCB2A0086916F /* PhyTree */ = {
+		CCA85B2321ACD88100D308AE /* hawkes_bd_xcode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CC81CBD3217FCB2A0086916F /* Build configuration list for PBXNativeTarget "PhyTree" */;
+			buildConfigurationList = CCA85B2B21ACD88100D308AE /* Build configuration list for PBXNativeTarget "hawkes_bd_xcode" */;
 			buildPhases = (
-				CC81CBC8217FCB2A0086916F /* Sources */,
-				CC81CBC9217FCB2A0086916F /* Frameworks */,
-				CC81CBCA217FCB2A0086916F /* CopyFiles */,
+				CCA85B2021ACD88100D308AE /* Sources */,
+				CCA85B2121ACD88100D308AE /* Frameworks */,
+				CCA85B2221ACD88100D308AE /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = PhyTree;
-			productName = PhyTree;
-			productReference = CC81CBCC217FCB2A0086916F /* PhyTree */;
+			name = hawkes_bd_xcode;
+			productName = hawkes_bd_xcode;
+			productReference = CCA85B2421ACD88100D308AE /* hawkes_bd_xcode */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		CC81CBC4217FCB2A0086916F /* Project object */ = {
+		CCA85B1C21ACD88100D308AE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Sean Wu";
 				TargetAttributes = {
-					CC81CBCB217FCB2A0086916F = {
-						CreatedOnToolsVersion = 10.0;
+					CCA85B2321ACD88100D308AE = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = CC81CBC7217FCB2A0086916F /* Build configuration list for PBXProject "PhyTree" */;
-			compatibilityVersion = "Xcode 9.3";
+			buildConfigurationList = CCA85B1F21ACD88100D308AE /* Build configuration list for PBXProject "hawkes_bd_xcode" */;
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = CC81CBC3217FCB2A0086916F;
-			productRefGroup = CC81CBCD217FCB2A0086916F /* Products */;
+			mainGroup = CCA85B1B21ACD88100D308AE;
+			productRefGroup = CCA85B2521ACD88100D308AE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CC81CBCB217FCB2A0086916F /* PhyTree */,
+				CCA85B2321ACD88100D308AE /* hawkes_bd_xcode */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		CC81CBC8217FCB2A0086916F /* Sources */ = {
+		CCA85B2021ACD88100D308AE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC81CBDB217FCB760086916F /* Tree.cpp in Sources */,
-				CC81CBD0217FCB2A0086916F /* main.cpp in Sources */,
-				CC81CBD8217FCB6B0086916F /* Node.cpp in Sources */,
+				CC707CDD21ADAE5F00A94014 /* Tree.cpp in Sources */,
+				CCA85B2821ACD88100D308AE /* main.cpp in Sources */,
+				CC707CDA21ACDBFD00A94014 /* Node.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		CC81CBD1217FCB2A0086916F /* Debug */ = {
+		CCA85B2921ACD88100D308AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -147,12 +150,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -160,7 +161,6 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -188,15 +188,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
-		CC81CBD2217FCB2A0086916F /* Release */ = {
+		CCA85B2A21ACD88100D308AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -206,12 +206,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -219,7 +217,6 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -241,55 +238,50 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
-		CC81CBD4217FCB2A0086916F /* Debug */ = {
+		CCA85B2C21ACD88100D308AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
-		CC81CBD5217FCB2A0086916F /* Release */ = {
+		CCA85B2D21ACD88100D308AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CC81CBC7217FCB2A0086916F /* Build configuration list for PBXProject "PhyTree" */ = {
+		CCA85B1F21ACD88100D308AE /* Build configuration list for PBXProject "hawkes_bd_xcode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CC81CBD1217FCB2A0086916F /* Debug */,
-				CC81CBD2217FCB2A0086916F /* Release */,
+				CCA85B2921ACD88100D308AE /* Debug */,
+				CCA85B2A21ACD88100D308AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CC81CBD3217FCB2A0086916F /* Build configuration list for PBXNativeTarget "PhyTree" */ = {
+		CCA85B2B21ACD88100D308AE /* Build configuration list for PBXNativeTarget "hawkes_bd_xcode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CC81CBD4217FCB2A0086916F /* Debug */,
-				CC81CBD5217FCB2A0086916F /* Release */,
+				CCA85B2C21ACD88100D308AE /* Debug */,
+				CCA85B2D21ACD88100D308AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = CC81CBC4217FCB2A0086916F /* Project object */;
+	rootObject = CCA85B1C21ACD88100D308AE /* Project object */;
 }

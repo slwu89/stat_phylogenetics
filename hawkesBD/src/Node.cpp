@@ -12,11 +12,11 @@ Node::Node() :
   left(nullptr), right(nullptr), ancestor(nullptr),
   index(0), name(""), branchLength(0.0)
   {
-  std::cout << "node born at " << this << std::endl;
+  // std::cout << "node born at " << this << std::endl;
 }
 
 Node::~Node(){
-  std::cout << "node dying at " << this << std::endl;
+  // std::cout << "node dying at " << this << std::endl;
 }
 
 /* print the node */

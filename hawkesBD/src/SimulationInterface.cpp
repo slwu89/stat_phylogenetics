@@ -20,4 +20,6 @@ void simulate_bd_poisson(const unsigned int seed,
   
   treeP->listNodes();
   
+  std::cout << treeP->getNewick() << std::endl;
+  
 }
