@@ -7,6 +7,10 @@
 #include <fstream>
 #include <string>
 
+/* in case we are lazy with the seed */
+#include <cstdlib>
+#include <ctime>
+
 #include "Tree.hpp"
 
 //' Simulate Birth-Death Cladogenesis Process on Tree
@@ -19,10 +23,15 @@
 //' }
 //' @export
 // [[Rcpp::export]]
-void simulate_bd_poisson(const unsigned int seed, 
+void simulate_bd_poisson(unsigned int seed, 
                          const double lambda, const double mu, const double duration, 
                          const unsigned int maxN,
                          const std::string& out){
+  
+  if(seed == 0){
+    std::srand(std::time(nullptr)); // use current time as seed for random generator
+    seed = std::rand();
+  }
   
   std::unique_ptr<Tree> treeP;
   treeP = std::make_unique<Tree>(lambda,mu,duration,seed);
@@ -34,6 +43,7 @@ void simulate_bd_poisson(const unsigned int seed,
   std::ofstream outfile;
   outfile.open(out);
   outfile << treeP->getNewick();
+  outfile << ";";
   outfile.close();
   
 }

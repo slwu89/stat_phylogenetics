@@ -6,11 +6,11 @@
 using namespace Rcpp;
 
 // simulate_bd_poisson
-void simulate_bd_poisson(const unsigned int seed, const double lambda, const double mu, const double duration, const unsigned int maxN, const std::string& out);
+void simulate_bd_poisson(unsigned int seed, const double lambda, const double mu, const double duration, const unsigned int maxN, const std::string& out);
 RcppExport SEXP _hawkesBD_simulate_bd_poisson(SEXP seedSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP durationSEXP, SEXP maxNSEXP, SEXP outSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const unsigned int >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type seed(seedSEXP);
     Rcpp::traits::input_parameter< const double >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const double >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const double >::type duration(durationSEXP);
