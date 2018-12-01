@@ -5,9 +5,9 @@
 #' 
 #' @examples
 #' \dontrun{
-#' simulate_bd_poisson(seed = 1948L,lambda = 1.5,mu = 0.95,duration = 5,maxN = 1e3L,out = "/Users/slwu89/Desktop/out.nwk")
+#' simulate_bd_poisson(seed = 0L,lambda = 1.5,mu = 0.95,duration = 5,maxN = 1e3L,out = "/Users/slwu89/Desktop/out.nwk")
 #' MyTree <- ape::read.tree("/Users/slwu89/Desktop/out.nwk")
-#' ggtree::ggtree(MyTree)
+#' plot(MyTree)
 #' }
 #' @export
 simulate_bd_poisson <- function(seed, lambda, mu, duration, maxN, out) {
