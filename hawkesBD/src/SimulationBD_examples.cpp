@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 
+#include <algorithm>
 #include <vector>
 
 /* for a halfway decent prng */
@@ -82,5 +83,75 @@ Rcpp::List poisson_bd(const double lambda, const double mu, const double tmax, u
   return Rcpp::List::create(
     Rcpp::_["X"] = X,
     Rcpp::_["t"] = t
+  );
+}
+
+
+
+//' Simulate Homogeneous non-Markov (Hawkes) Birth-Death Process
+//' 
+//' The slow version here simulates as a marked Hawkes process, by sampling the immigration process as well as 
+//' the marked descendent process.
+//' 
+//' @param baseline immigration rate (constant; corresponds to homogeneous Poisson immigrant arrivals)
+//' @param alpha mean number of offspring for each particle
+//' @param beta rate parameter of exponentially distributed particle lifespan
+//' @param tmax maximum simulation time
+//' @param seed a seed (if set to 0, will draw a "random" seed from the system time)
+//' @param maxN if population exceeds this number kill the simulation (useful for preventing runaway processes)
+//' 
+//' @examples
+//' \dontrun{
+//' 
+//' plot(stepfun(x = out$t,y = c(0,out$X)),xlim=c(0,ceiling(max(out$t))))
+//' }
+//' @export
+// [[Rcpp::export]]
+Rcpp::List hawkes_exp_bd_slow(const double mu, const double alpha, const double beta, const double tmax, unsigned int seed, const unsigned int maxN = 1e4){
+  
+  /* prng */
+  if(seed == 0){
+    std::srand(std::time(nullptr)); // use current time as seed for random generator
+    seed = std::rand();
+  }
+  std::mt19937  rng(seed);
+  std::uniform_real_distribution<double> runif(0,1);
+  std::exponential_distribution<double> rexp(beta);
+  std::poisson_distribution<unsigned int> rpois(mu*tmax);
+  
+  /* sample immigrants (the quick way, because its a homogeneous Poisson process) */
+  unsigned int n_imm = rpois(rng) + 1;
+  std::vector<double> imm_t(n_imm); /* times */
+  std::vector<double> imm_m(n_imm); /* marks */
+  imm_t[0] = 0.0; /* always somebody at time 1 */
+  imm_m[0] = rexp(rng);
+  
+  /* sample the rest of the immigrant's times */
+  std::generate(imm_t.begin(),imm_t.end(),[&](){
+    double t = runif(rng);
+    t = t*tmax;
+    return t;
+  });
+  std::sort(imm_t.begin(),imm_t.end());
+  
+  /* sample the rest of the immigrant's marks */
+  std::generate(imm_m.begin(),imm_m.end(),[&](){
+    return rexp(rng);
+  });
+  
+  unsigned int x = n_imm;
+  
+  /* sample clusters as NHPP */
+  for(size_t i=0; i<imm_t.size(); i++){
+    
+    /* put at relatively low level of this simulation procedure */
+    if(n_imm >= maxN){
+      break;
+    }
+    
+  }
+  
+  return Rcpp::List::create(
+    Rcpp::_["immigrants"] = imm_t
   );
 }

@@ -20,6 +20,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// hawkes_exp_bd_slow
+Rcpp::List hawkes_exp_bd_slow(const double mu, const double alpha, const double beta, const double tmax, unsigned int seed, const unsigned int maxN);
+RcppExport SEXP _hawkesBD_hawkes_exp_bd_slow(SEXP muSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP tmaxSEXP, SEXP seedSEXP, SEXP maxNSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const double >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const double >::type tmax(tmaxSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< const unsigned int >::type maxN(maxNSEXP);
+    rcpp_result_gen = Rcpp::wrap(hawkes_exp_bd_slow(mu, alpha, beta, tmax, seed, maxN));
+    return rcpp_result_gen;
+END_RCPP
+}
 // simulate_bd_poisson
 void simulate_bd_poisson(unsigned int seed, const double lambda, const double mu, const double duration, const unsigned int maxN, const std::string& out);
 RcppExport SEXP _hawkesBD_simulate_bd_poisson(SEXP seedSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP durationSEXP, SEXP maxNSEXP, SEXP outSEXP) {
@@ -38,6 +54,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_hawkesBD_poisson_bd", (DL_FUNC) &_hawkesBD_poisson_bd, 5},
+    {"_hawkesBD_hawkes_exp_bd_slow", (DL_FUNC) &_hawkesBD_hawkes_exp_bd_slow, 6},
     {"_hawkesBD_simulate_bd_poisson", (DL_FUNC) &_hawkesBD_simulate_bd_poisson, 6},
     {NULL, NULL, 0}
 };

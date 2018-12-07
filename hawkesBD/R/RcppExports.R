@@ -19,6 +19,28 @@ poisson_bd <- function(lambda, mu, tmax, seed, maxN = 1e4L) {
     .Call('_hawkesBD_poisson_bd', PACKAGE = 'hawkesBD', lambda, mu, tmax, seed, maxN)
 }
 
+#' Simulate Homogeneous non-Markov (Hawkes) Birth-Death Process
+#' 
+#' The slow version here simulates as a marked Hawkes process, by sampling the immigration process as well as 
+#' the marked descendent process.
+#' 
+#' @param baseline immigration rate (constant; corresponds to homogeneous Poisson immigrant arrivals)
+#' @param alpha mean number of offspring for each particle
+#' @param beta rate parameter of exponentially distributed particle lifespan
+#' @param tmax maximum simulation time
+#' @param seed a seed (if set to 0, will draw a "random" seed from the system time)
+#' @param maxN if population exceeds this number kill the simulation (useful for preventing runaway processes)
+#' 
+#' @examples
+#' \dontrun{
+#' 
+#' plot(stepfun(x = out$t,y = c(0,out$X)),xlim=c(0,ceiling(max(out$t))))
+#' }
+#' @export
+hawkes_exp_bd_slow <- function(mu, alpha, beta, tmax, seed, maxN = 1e4L) {
+    .Call('_hawkesBD_hawkes_exp_bd_slow', PACKAGE = 'hawkesBD', mu, alpha, beta, tmax, seed, maxN)
+}
+
 #' Simulate Birth-Death Cladogenesis Process on Tree
 #' 
 #' @examples
