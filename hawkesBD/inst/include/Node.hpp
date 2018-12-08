@@ -46,4 +46,11 @@ protected:
 };
 
 
+/* marked Node for Hawkes BD process */
+class Node_hawkes : public Node {
+  
+};
+
+
+
 #endif
