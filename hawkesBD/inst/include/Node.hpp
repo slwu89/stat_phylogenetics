@@ -19,6 +19,7 @@
 class Node {
 public:
   Node();
+  virtual ~Node();
   Node*               getLft(){return left;};
   Node*               getRht(){return right;};
   Node*               getAnc(){return ancestor;};
@@ -46,10 +47,14 @@ protected:
 };
 
 
-/* marked Node for Hawkes BD process */
-class Node_hawkes : public Node {
-  
-};
+// /* marked Node for Hawkes BD process */
+// class Node_hawkes : public Node {
+// public:
+//   Node_hawkes()
+//   
+// private:
+//   
+// };
 
 
 

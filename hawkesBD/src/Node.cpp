@@ -25,6 +25,8 @@ Node::Node(){
   time = 0.0;
 };
 
+Node::~Node(){};
+
 void Node::print(){
   std::cout << "Node " << index << " (" << this << ")" << std::endl;
   std::cout << "  Lft:  " << left << std::endl;

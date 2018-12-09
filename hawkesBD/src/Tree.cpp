@@ -14,18 +14,29 @@
  * constructor & destructor
 ################################################################################ */
  
-Tree::Tree(double lambda_, double mu_, double duration_, unsigned int seed_) : 
-  root(NULL),
-  numExtant(0),
-  lambda(lambda_),
-  mu(mu_),
-  duration(duration_),
-  prngPtr(std::make_unique<prng>(seed_))
+Tree::Tree(double duration_, unsigned int seed_) : 
+ root(NULL),
+ numExtant(0),
+ duration(duration_),
+ prngPtr(std::make_unique<prng>(seed_))
 {
-  std::cout << "tree born at " << this << std::endl;
-  activeNodes.clear();
-  nodes.clear();
+ std::cout << "tree born at " << this << std::endl;
+ activeNodes.clear();
+ nodes.clear();
 }
+ 
+// Tree::Tree(double lambda_, double mu_, double duration_, unsigned int seed_) : 
+//   root(NULL),
+//   numExtant(0),
+//   lambda(lambda_),
+//   mu(mu_),
+//   duration(duration_),
+//   prngPtr(std::make_unique<prng>(seed_))
+// {
+//   std::cout << "tree born at " << this << std::endl;
+//   activeNodes.clear();
+//   nodes.clear();
+// }
 
 Tree::~Tree(){
   std::cout << "tree dying at " << this << std::endl;
@@ -64,13 +75,112 @@ void Tree::passDown(Node* p){
   }
 }
 
+/* choose a node from set of active nodes */
+Node* Tree::chooseNodeFromSet(){
+  int whichNode = (int)(activeNodes.size() * prngPtr->get_runif()); 
+  int i = 0;
+  for(Node* nde : activeNodes){
+    if(whichNode == i){
+      return nde;
+    }
+    i++;
+  }
+  return NULL;
+};
 
 /* ################################################################################
- * birth-death process simulation
+ * run immediately after simualtion finishes
+################################################################################ */
+
+void Tree::process_simulate(){
+  /* any nodes that are still alive have their time set to current time */
+  numExtant = activeNodes.size();
+  for(Node* nde : activeNodes){
+    nde->setTime(duration);
+  }
+  
+  initializeTraversalOrder();
+  
+  /* set the index variable and assign branch lengths from the node times */
+  int nodeIdx = 0;
+  for(int i=0; i<postOrderSequence.size(); i++){
+    Node* p = postOrderSequence[i];
+    if(p->getLft() == NULL && p->getRht() == NULL){
+      p->setIndex(nodeIdx++);
+      p->setName( std::to_string(nodeIdx) ); 
+    }
+    if(p->getAnc() != NULL){
+      p->setBranchLength( p->getTime() - p->getAnc()->getTime() );
+    }
+  }
+  for(int i=0; i<postOrderSequence.size(); i++){
+    Node* p = postOrderSequence[i];
+    if( !(p->getLft() == NULL && p->getRht() == NULL) ){
+      p->setIndex(nodeIdx++); 
+    }
+  }
+}
+
+
+/* ################################################################################
+ * write tree in Newick format
+################################################################################ */
+
+/* return tree in newick format as a string */
+std::string Tree::getNewick(){
+  std::stringstream ss;
+  if(root->getLft() != NULL && root->getRht() != NULL){
+    writeTree(root, ss);
+  } else {
+    writeTree(root->getLft(), ss);
+  }
+  std::string newick = ss.str();
+  return newick;
+};
+
+/* write the tree recursively */
+void Tree::writeTree(Node* p, std::stringstream& ss){
+  
+  if(p != NULL){
+    if(p->getLft() == NULL){
+      ss << p->getName() << ":" << std::fixed << std::setprecision(5) << p->getBranchLength();
+    } else {
+      ss << "(";
+      writeTree(p->getLft(), ss); 
+      ss << ",";
+      writeTree(p->getRht(), ss); 
+      if(p->getAnc() == NULL){
+        ss << ")";
+      } else {
+        ss << "):" << std::fixed << std::setprecision(5) << p->getBranchLength();
+      }
+    }
+  } 
+}
+
+
+
+
+
+
+
+
+/* ################################################################################
+ * Poisson-BD Tree
 ################################################################################ */
  
-/* run a simulation */
-void Tree::simulate(const unsigned int maxN){
+Tree_PoissonBD::Tree_PoissonBD(double lambda_, double mu_, double duration_, unsigned int seed_) : 
+  Tree(duration_,seed_), lambda(lambda_), mu(mu_)
+  {
+  std::cout << "poisson-bd tree born at " << this << std::endl;
+};
+
+Tree_PoissonBD::~Tree_PoissonBD(){
+  std::cout << "poisson-bd tree dying at " << this << std::endl;
+};
+ 
+ /* run a simulation */
+void Tree_PoissonBD::simulate(const unsigned int maxN){
   
   /* generate a birth-death process with parameter lambda, mu, and duration */
   
@@ -92,8 +202,8 @@ void Tree::simulate(const unsigned int maxN){
     t += prngPtr->get_rexp(rate);
     
     /* if t is still less than duration, go ahead do the speciation or extinction thing
-     * on a randomly selected active lineage
-     */
+    * on a randomly selected active lineage
+    */
     if(t < duration){
       /* choose a ndoe */
       Node* p = chooseNodeFromSet();
@@ -133,85 +243,7 @@ void Tree::simulate(const unsigned int maxN){
     }
     
   } /* end sim */
-  
-  /* clean up */
-  
-  
-  /* any nodes that are still alive have their time set to current time */
-  numExtant = activeNodes.size();
-  for(Node* nde : activeNodes){
-    nde->setTime(duration);
-  }
-  
-  initializeTraversalOrder();
-  
-  /* set the index variable and assign branch lengths from the node times */
-  int nodeIdx = 0;
-  for(int i=0; i<postOrderSequence.size(); i++){
-    Node* p = postOrderSequence[i];
-    if(p->getLft() == NULL && p->getRht() == NULL){
-      p->setIndex(nodeIdx++);
-      p->setName( std::to_string(nodeIdx) ); 
-    }
-    if(p->getAnc() != NULL){
-      p->setBranchLength( p->getTime() - p->getAnc()->getTime() );
-    }
-  }
-  for(int i=0; i<postOrderSequence.size(); i++){
-    Node* p = postOrderSequence[i];
-    if( !(p->getLft() == NULL && p->getRht() == NULL) ){
-      p->setIndex(nodeIdx++); 
-    }
-  }
-
-}
-
-/* choose a node from set of active nodes */
-Node* Tree::chooseNodeFromSet(){
-  int whichNode = (int)(activeNodes.size() * prngPtr->get_runif()); 
-  int i = 0;
-  for(Node* nde : activeNodes){
-    if(whichNode == i){
-      return nde;
-    }
-    i++;
-  }
-  return NULL;
-};
-
-
-/* ################################################################################
- * write tree in Newick format
-################################################################################ */
-
-/* return tree in newick format as a string */
-std::string Tree::getNewick(){
-  std::stringstream ss;
-  if(root->getLft() != NULL && root->getRht() != NULL){
-    writeTree(root, ss);
-  } else {
-    writeTree(root->getLft(), ss);
-  }
-  std::string newick = ss.str();
-  return newick;
-};
-
-/* write the tree recursively */
-void Tree::writeTree(Node* p, std::stringstream& ss){
-  
-  if(p != NULL){
-    if(p->getLft() == NULL){
-      ss << p->getName() << ":" << std::fixed << std::setprecision(5) << p->getBranchLength();
-    } else {
-      ss << "(";
-      writeTree(p->getLft(), ss); 
-      ss << ",";
-      writeTree(p->getRht(), ss); 
-      if(p->getAnc() == NULL){
-        ss << ")";
-      } else {
-        ss << "):" << std::fixed << std::setprecision(5) << p->getBranchLength();
-      }
-    }
-  } 
+    
+    /* clean up */
+    process_simulate();
 }

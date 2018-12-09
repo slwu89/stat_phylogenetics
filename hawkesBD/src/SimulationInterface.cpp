@@ -34,7 +34,7 @@ void simulate_bd_poisson(unsigned int seed,
   }
   
   std::unique_ptr<Tree> treeP;
-  treeP = std::make_unique<Tree>(lambda,mu,duration,seed);
+  treeP = std::make_unique<Tree_PoissonBD>(lambda,mu,duration,seed);
   
   treeP->simulate(maxN);
   
